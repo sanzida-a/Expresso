@@ -70,7 +70,7 @@ if (isset($_SESSION['valid'])) {
                 $content = $r['content'];
                 $ptd = $r['date'];
             ?>
-
+            
             <div class="article">
 
                 <h2><?php echo $title ?></h2>
