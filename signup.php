@@ -3,7 +3,15 @@
 <head>
     <title>Sign Up</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="temp/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="temp/css/style.css">
+    
+    
 </head>
 
 <body>
@@ -100,78 +108,82 @@
             }
         } else {
         ?>
-    <h1>Sign Up</h1>
-    <p><span class="error"></span></p>
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <div class="group">
-            <label for="user" class="label">Name: </label>
-            <input type="text" name="name" value="<?php echo $name; ?>">
-            <span class="error"> <?php echo $nameErr; ?></span><br><br>
+        <div class="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+			<div class="inner">
+            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <h3>Sign Up</h3>
+                    <p><span class="error"></span></p>
+                    
+                    <div class="form-group">
+                        <div class="form-wrapper">
+                            <label for="user" class="label">Name: </label>
+                            <input type="text" name="name" value="<?php echo $name; ?>" class="form-control">
+                            <span class="error"> <?php echo $nameErr; ?></span><br><br>
+                        </div>
+                        <div class="form-wrapper">
+                            <label for="email" class="label">Email: </label>
+                            <input type="email" name="email" value="<?php echo $email; ?>" class="form-control">
+                            <span class="error"> <?php echo $emailErr; ?></span><br><br>
+                        </div>
+                    </div>
+
+                        <div class="form-wrapper">
+                            <label for="username" class="label">Username: </label>
+                            <input type="text" name="username" value="<?php echo $username; ?>" class="form-control"><br><br>
+                            <span class="error"> <?php echo $unameErr; ?></span><br><br>
+                        </div>
+                    
+
+                        <div class="form-wrapper">
+                            <label for="password" class="label">Password: </label>
+                            <input type="password" name="password" value="<?php echo $password; ?>" class="form-control">
+                            <span class="error"> <?php echo $passErr; ?></span><br><br>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-wrapper">
+                                <label for="dob" class="label">Date of Birth: </label>
+                                <input type="date" name="dob" value="dob" class="form-control"><br><br>
+                            </div>
+                            <div class="form-wrapper">
+                                <label for="gender" class="label">Gender: </label>
+                                <input type="radio" name="gender" <?php if (isset($gender) && $gender == "female")
+                                                                        echo "checked"; ?> value="female">Female
+                                <input type="radio" name="gender" <?php if (isset($gender) && $gender == "male")
+                                                                        echo "checked"; ?> value="male">Male
+                                <input type="radio" name="gender"  <?php if (isset($gender) && $gender == "other")
+                                                                        echo "checked"; ?> value="other">Other
+                                <span class="error"> <?php echo $genderErr; ?></span>
+                            </div>
+                        </div>
+                        <div class="form-wrapper">
+                            <label for="country" class="label">Country</label>
+                            <?php
+                            $sql = "SELECT countryname,countrycode FROM countries";
+                            $s = $pdo->prepare($sql);
+                            $s->execute();
+                            $con = $s->fetchAll();
+                            ?>
+                            <select class="browser-default custom-select">
+                            <option selected>Country</option>
+                                <?php foreach ($con as $user) : ?>
+
+                                <option value='<?= $user['countrycode']; ?>' class="form-control" ><?= $user['countryname']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                           
+                        </div>
+                       
+        
+        <button type="submit" name="submit" value="Submit">Sign Up</button><br><br>
+                        <div class="form-wrapper">
+                            <p>Aready a member? <a href='signin.php'>Sign In</a></p>
+                            <p>Wanna go back? <a href='index.php'>Home</a></p>
+                        </div>
+                        
+                        </form>  
+            </div>
         </div>
-        <div class="group">
-            <label for="dob" class="label">Date of Birth: </label>
-            <input type="date" name="dob" value="dob"><br><br>
-        </div>
-
-        <div class="group">
-            <label for="username" class="label">Username: </label>
-            <input type="text" name="username" value="<?php echo $username; ?>"><br><br>
-            <span class="error"> <?php echo $unameErr; ?></span><br><br>
-        </div>
-        <div class="group">
-            <label for="email" class="label">Email: </label>
-            <input type="email" name="email" value="<?php echo $email; ?>">
-            <span class="error"> <?php echo $emailErr; ?></span><br><br>
-        </div>
-
-        <div class="group">
-            <label for="password" class="label">Password: </label>
-            <input type="password" name="password" value="<?php echo $password; ?>">
-            <span class="error"> <?php echo $passErr; ?></span><br><br>
-        </div>
-
-        <div class="group">
-            <label for="gender" class="label">Gender: </label>
-            <input type="radio" name="gender" <?php if (isset($gender) && $gender == "female")
-                                                    echo "checked"; ?> value="female">Female
-            <input type="radio" name="gender" <?php if (isset($gender) && $gender == "male")
-                                                    echo "checked"; ?> value="male">Male
-            <input type="radio" name="gender" <?php if (isset($gender) && $gender == "other")
-                                                    echo "checked"; ?> value="other">Other
-            <span class="error"> <?php echo $genderErr; ?></span>
-            <br><br>
-
-        </div>
-
-        <div class="group">
-            <label for="country" class="label">Country</label>
-            <?php
-            $sql = "SELECT countryname,countrycode FROM countries";
-            $s = $pdo->prepare($sql);
-            $s->execute();
-            $con = $s->fetchAll();
-            ?>
-            <select name="country">
-                <?php foreach ($con as $user) : ?>
-
-                <option value='<?= $user['countrycode']; ?>'><?= $user['countryname']; ?></option>
-                <?php endforeach; ?>
-            </select>
-            <br><br>
-        </div>
-
-        </div>
-        <div class="group">
-            <button type="submit" name="submit" value="Submit">Sign Up</button>
-        </div>
-        <br><br>
-
-        <p>Aready a member? <a href='signin.php'>Sign In</a></p>
-        <p>Wanna go back? <a href='index.php'>Home</a></p>
-
-    </form>
-    <?php
-
+<?php
 }
 ?>
 
